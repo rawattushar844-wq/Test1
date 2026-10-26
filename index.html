@@ -89,23 +89,25 @@
 
 <script>
 /* ---------- SEND YES + REDIRECT ---------- */
-function sendAnswer(answer) {
-    const questionText =
-        document.getElementById("question").innerText;
+async function sendAnswer(answer) {
+    const questionText = document.getElementById("question").innerText;
 
-    fetch("https://script.google.com/macros/s/AKfycbzNq9C9o7Z3xUeu__ZTrN7ssdGXQlmn7XMaOWHXRBB0ZIH5lwXfQ9cjHlqiy3jXtSlr/exec", {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify({
-            response: answer,
-            question: questionText
-        }),
-        headers: { "Content-Type": "text/plain;charset=utf-8" }
-    });
+    try {
+        await fetch("PASTE_YOUR_WEB_APP_URL_HERE", {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({
+                response: answer,
+                question: questionText
+            })
+        });
 
-    setTimeout(() => {
         window.location.href = "success.html";
-    }, 400);
+    } catch (error) {
+        document.getElementById("status").innerText =
+            "Could not send your answer. Please try again.";
+    }
 }
 
 /* ---------- ESCAPE LOGIC (DESKTOP + MOBILE) ---------- */
